@@ -1,0 +1,40 @@
+﻿using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using demoexam.Entities;
+
+namespace demoexam;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
+{
+    private readonly Database _database = new();
+    
+    private void LoadItems() 
+    {
+        var imagesFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resources");
+        var defaultImagePath = System.IO.Path.Combine(imagesFolder, "picture.png");
+        var items = _database.GetItems();
+        foreach (var item in items)
+        {
+            item.Image = item.Image == null ? defaultImagePath : System.IO.Path.Combine(imagesFolder, item.Image);
+            Console.WriteLine(item.ToString());
+        }
+        ListBox.ItemsSource = items;
+    }
+    
+    public MainWindow()
+    {
+        InitializeComponent();
+        LoadItems();
+    }
+}
