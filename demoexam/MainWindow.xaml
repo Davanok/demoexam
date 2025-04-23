@@ -8,7 +8,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListBox Name="ListBox">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" Name="FoundItemsTextBlock"/>
+        
+        <TextBlock Grid.Row="0" Grid.Column="1" Name="UserName"/>
+        <Button Grid.Row="0" Grid.Column="2" Click="AuthButton"/>
+        
+        <ComboBox Grid.Row="1" Grid.Column="0" Name="ComboBox" DisplayMemberPath="Label" SelectionChanged="OnSaleSelectionChanged"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="TextBox" SelectionChanged="TextBox_OnSelectionChanged"/>
+        
+        <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Name="ListBox">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type entities:FullItem}">
                     <Border BorderBrush="Black"

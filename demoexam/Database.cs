@@ -1,4 +1,6 @@
-﻿using demoexam.Entities;
+﻿using System;
+using System.Collections.Generic;
+using demoexam.Entities;
 
 namespace demoexam;
 using MySql.Data.MySqlClient;
