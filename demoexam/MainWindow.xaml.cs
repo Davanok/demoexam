@@ -18,6 +18,35 @@ public partial class MainWindow : Window
     private readonly Database _database = new();
 
     private List<FullItem> _items = [];
+
+    private void SetUser(User? user)
+    {
+        _user = user;
+        if (user == null)
+        {
+            AuthButton.Content = "Войти";
+            UserNameTextBlock.Text = "";
+            
+            AddItemButton.Visibility = Visibility.Collapsed;
+            EditItemButton.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            AuthButton.Content = "Выйти";
+            UserNameTextBlock.Text = user.UserName;
+
+            if (user.Role.Name == "Администратор")
+            {
+                AddItemButton.Visibility = Visibility.Visible;
+                EditItemButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AddItemButton.Visibility = Visibility.Collapsed;
+                EditItemButton.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
     private User? _user;
 
     private void LoadItems()
@@ -49,8 +78,7 @@ public partial class MainWindow : Window
 
     private void OnSaleSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var selectedItem = ComboBox.SelectedItem as ComboBoxItem;
-        if (selectedItem == null || selectedItem.Id == 1)
+        if (ComboBox.SelectedItem is not ComboBoxItem selectedItem || selectedItem.Id == 1)
             AddAllItems();
         else FilterItems( item => 
             selectedItem.Id == 2 && item.Sale is >= 0 and <= 24 || 
@@ -83,26 +111,28 @@ public partial class MainWindow : Window
         else FilterItems(item => item.Name.StartsWith(text, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    private void AuthButton(object sender, RoutedEventArgs e)
+    private void AuthButtonClick(object sender, RoutedEventArgs e)
     {
-        if (sender is not Button button) return;
         if (_user != null)
         {
-            _user = null;
-            button.Content = "Войти";
-            UserName.Text = "";
+            SetUser(null);
             return;
         }
 
-        AuthWindow window = new()
-        {
-            Database = _database
-        };
+        AuthWindow window = new() { Database = _database };
         window.ShowDialog();
         if (window.User == null) return;
         
-        _user = window.User;
-        button.Content = "Выйти";
-        UserName.Text = _user.UserName;
+        SetUser(window.User);
+    }
+
+    private void AddItemButtonClick(object sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void EditItemButtonClick(object sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
     }
 }

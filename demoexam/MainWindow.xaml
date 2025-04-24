@@ -12,6 +12,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -21,8 +22,8 @@
         
         <TextBlock Grid.Row="0" Grid.Column="0" Name="FoundItemsTextBlock"/>
         
-        <TextBlock Grid.Row="0" Grid.Column="1" Name="UserName"/>
-        <Button Grid.Row="0" Grid.Column="2" Click="AuthButton" Content="Войти"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Name="UserNameTextBlock"/>
+        <Button Grid.Row="0" Grid.Column="2" Click="AuthButtonClick" Content="Войти" Name="AuthButton"/>
         
         <ComboBox Grid.Row="1" Grid.Column="0" Name="ComboBox" DisplayMemberPath="Label" SelectionChanged="OnSaleSelectionChanged"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="TextBox" SelectionChanged="TextBox_OnSelectionChanged"/>
@@ -66,5 +67,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        
+        <Button Grid.Row="3" Grid.Column="0" Click="AddItemButtonClick" Visibility="Collapsed" Name="AddItemButton"/>
+        <Button Grid.Row="3" Grid.Column="2" Click="EditItemButtonClick" Visibility="Collapsed" Name="EditItemButton"/>
     </Grid>
 </Window>
