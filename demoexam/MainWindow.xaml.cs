@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using demoexam.Entities;
+using demoexam.pages;
 
 namespace demoexam;
 
@@ -17,7 +18,7 @@ public partial class MainWindow : Window
 
     private readonly Database _database = new();
 
-    private List<FullItem> _items = [];
+    private List<UiItem> _items = [];
 
     private void SetUser(User? user)
     {
@@ -49,7 +50,7 @@ public partial class MainWindow : Window
     }
     private User? _user;
 
-    private void LoadItems()
+    private void UpdateItems()
     {
         var imagesFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "resources");
         var defaultImagePath = System.IO.Path.Combine(imagesFolder, "picture.png");
@@ -68,7 +69,7 @@ public partial class MainWindow : Window
         
         FoundItemsTextBlock.Text = $"Found {ListBox.Items.Count} items";
     }
-    private void FilterItems(Func<FullItem, bool> filter)
+    private void FilterItems(Func<UiItem, bool> filter)
     {
         ListBox.Items.Clear();
         foreach (var item in _items.Where(filter)) ListBox.Items.Add(item);
@@ -91,7 +92,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        LoadItems();
+        UpdateItems();
         ComboBox.ItemsSource = new ComboBoxItem[]
         {
             new() { Id = 1, Label = "Все диапазоны" },
@@ -119,20 +120,29 @@ public partial class MainWindow : Window
             return;
         }
 
-        AuthWindow window = new() { Database = _database };
+        AuthWindow window = new(_database);
         window.ShowDialog();
         if (window.User == null) return;
         
         SetUser(window.User);
     }
 
+    private void OpenEditItemWindow(string? article)
+    {
+        EditItemWindow window = new(article, _database);
+        window.ShowDialog();
+    }
+
     private void AddItemButtonClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        OpenEditItemWindow(null);
+        UpdateItems();
     }
 
     private void EditItemButtonClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        if (ListBox.SelectedItem is not UiItem selectedItem) return;
+        OpenEditItemWindow(selectedItem.Article);
+        UpdateItems();
     }
 }

@@ -81,4 +81,12 @@
       <PackageReference Include="MySql.Data" Version="9.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="pages\AuthWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
 </Project>

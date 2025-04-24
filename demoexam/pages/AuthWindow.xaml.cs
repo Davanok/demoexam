@@ -1,15 +1,16 @@
 ﻿using System.Windows;
 using demoexam.Entities;
 
-namespace demoexam;
+namespace demoexam.pages;
 
 public partial class AuthWindow : Window
 {
-    public required Database Database;
+    private readonly Database _database;
     public User? User { private set; get; }
-    public AuthWindow()
+    public AuthWindow(Database database)
     {
         InitializeComponent();
+        _database = database;
     }
 
     private void OnCancelButtonClick(object sender, RoutedEventArgs e) { Close(); }
@@ -22,7 +23,7 @@ public partial class AuthWindow : Window
             return;
         }
 
-        var user = Database.GetUser(UserNameField.Text);
+        var user = _database.GetUser(UserNameField.Text);
         if (user == null) {
             MessageBox.Show("user with that username doesn't found");
             return;
