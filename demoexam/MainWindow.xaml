@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:demoexam"
         xmlns:entities="clr-namespace:demoexam.Entities"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -22,7 +22,7 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Name="FoundItemsTextBlock"/>
         
         <TextBlock Grid.Row="0" Grid.Column="1" Name="UserName"/>
-        <Button Grid.Row="0" Grid.Column="2" Click="AuthButton"/>
+        <Button Grid.Row="0" Grid.Column="2" Click="AuthButton" Content="Войти"/>
         
         <ComboBox Grid.Row="1" Grid.Column="0" Name="ComboBox" DisplayMemberPath="Label" SelectionChanged="OnSaleSelectionChanged"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Name="TextBox" SelectionChanged="TextBox_OnSelectionChanged"/>

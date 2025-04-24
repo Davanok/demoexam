@@ -18,6 +18,7 @@ public partial class MainWindow : Window
     private readonly Database _database = new();
 
     private List<FullItem> _items = [];
+    private User? _user;
 
     private void LoadItems()
     {
@@ -48,7 +49,6 @@ public partial class MainWindow : Window
 
     private void OnSaleSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        
         var selectedItem = ComboBox.SelectedItem as ComboBoxItem;
         if (selectedItem == null || selectedItem.Id == 1)
             AddAllItems();
@@ -85,6 +85,24 @@ public partial class MainWindow : Window
 
     private void AuthButton(object sender, RoutedEventArgs e)
     {
+        if (sender is not Button button) return;
+        if (_user != null)
+        {
+            _user = null;
+            button.Content = "Войти";
+            UserName.Text = "";
+            return;
+        }
+
+        AuthWindow window = new()
+        {
+            Database = _database
+        };
+        window.ShowDialog();
+        if (window.User == null) return;
         
+        _user = window.User;
+        button.Content = "Выйти";
+        UserName.Text = _user.UserName;
     }
 }
