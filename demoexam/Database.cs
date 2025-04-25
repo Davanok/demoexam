@@ -15,7 +15,7 @@ public class Database
                                         items.image         as image
                                  from items
                                           RIGHT JOIN categories ON category_id = categories.id
-                                          RIGHT JOIN existing_items ON existing_items.article = article
+                                          RIGHT JOIN existing_items ON existing_items.article = items.article
                                  """;
 
     private const string GetUserQuery = """
@@ -44,7 +44,7 @@ public class Database
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                var image = reader.GetString("image");
+                var image = reader["image"] as string;
                 image = string.IsNullOrWhiteSpace(image) ? null : image;
                 UiItem item = new()
                 {
@@ -145,6 +145,25 @@ public class Database
         return manufacturers;
     }
 
+    public void GetLists(
+        out List<Category> categories, 
+        out List<Supplier> suppliers,
+        out List<Manufacturer> manufacturers
+        )
+    {
+        _connection.Open();
+        try
+        {
+            categories = GetCategories(_connection);
+            suppliers = GetSuppliers(_connection);
+            manufacturers = GetManufacturers(_connection);
+        }
+        finally
+        {
+            _connection.Close();
+        }
+    }
+
     private const string GetEditableItemQuery = """
                                                 SELECT i.`article` as article,
                                                     i.name as name,
@@ -161,7 +180,7 @@ public class Database
                                                     RIGHT JOIN `existing_items` e ON i.`article` = e.`article`
                                                 WHERE i.`article` = @article
                                                 """;
-    public EditableItem? SelectItemForEdit(string article)
+    public EditableItem? GetItemForEdit(string article)
     {
         EditableItem? result = null;
         _connection.Open();
@@ -176,7 +195,7 @@ public class Database
             var reader = command.ExecuteReader();
             if (reader.Read())
             {
-                var image = reader.GetString("image");
+                var image = reader["image"] as string;
                 image = string.IsNullOrWhiteSpace(image) ? null : image;
                 result = new EditableItem
                 {

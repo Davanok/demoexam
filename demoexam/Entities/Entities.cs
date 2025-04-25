@@ -60,26 +60,27 @@ public class EditableItem
 {
     public string Article { get; set; } = "";
     public string Name { get; set; } = "";
-    public int Count { get; set; } = 0;
-    public float MaxSale { get; set; } = 0;
-    public float Sale { get; set; } = 0;
-    public int CategoryId { get; set; } = -1;
-    public int SupplierId { get; set; } = -1;
-    public int ManufacturerId { get; set; } = -1;
-    public string? Image { get; set; } = null;
+    public int Count { get; set; }
+    public float MaxSale { get; set; }
+    public float Sale { get; set; }
+    public int CategoryId { get; set; }
+    public int SupplierId { get; set; }
+    public int ManufacturerId { get; set; }
+    public string? Image { get; set; }
     public string Description { get; set; } = "";
-    public float Price { get; set; } = 0;
+    public float Price { get; set; }
 
     bool Validate() => !(
-        string.IsNullOrEmpty(Article) || 
-        string.IsNullOrEmpty(Name) || 
-        Categories.Select(c => c.Id).Contains(CategoryId) || 
+        string.IsNullOrEmpty(Article) ||
+        string.IsNullOrEmpty(Name) ||
+        Categories.Select(c => c.Id).Contains(CategoryId) ||
         Count < 0 ||
-        MaxSale < 0 || 
-        Sale < 0 || 
-        Sale > MaxSale || 
-        Suppliers.Select(s => s.Id).Contains(SupplierId) || 
-        Manufacturers.Select(m => m.Id).Contains(ManufacturerId)
+        MaxSale < 0 ||
+        Sale < 0 ||
+        Sale > MaxSale ||
+        Suppliers.Select(s => s.Id).Contains(SupplierId) ||
+        Manufacturers.Select(m => m.Id).Contains(ManufacturerId) ||
+        Price < 0
     );
 
     public required List<Category> Categories { get; init; }
