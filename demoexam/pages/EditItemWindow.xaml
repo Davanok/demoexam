@@ -9,23 +9,35 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2">
-            <TextBlock Name="ItemArticle"/>
-            <TextBlock Name="ItemName"/>
-            <TextBlock Name="ItemCount"/>
-            <TextBlock Name="ItemMaxSale"/>
-            <TextBlock Name="ItemSale"/>
+        <StackPanel Grid.ColumnSpan="2" Margin="10">
+            <TextBlock Text="Артикул"/>
+            <TextBox Name="ItemArticle"/>
+            <TextBlock Text="Название"/>
+            <TextBox Name="ItemName"/>
+            <TextBlock Text="Единица измерения"/>
+            <TextBox Name="ItemMeasurementUnit"/>
+            <TextBlock Text="Количество"/>
+            <TextBox Name="ItemCount"/>
+            <TextBlock Text="Максимальная скидка"/>
+            <TextBox Name="ItemMaxSale"/>
+            <TextBlock Text="Скидка"/>
+            <TextBox Name="ItemSale"/>
+            <TextBlock Text="Категория"/>
             <ComboBox Name="ItemCategory" DisplayMemberPath="Name"/>
+            <TextBlock Text="Поставщик"/>
             <ComboBox Name="ItemSupplier" DisplayMemberPath="Name"/>
+            <TextBlock Text="Изготовитель"/>
             <ComboBox Name="ItemManufacturer" DisplayMemberPath="Name"/>
-            <TextBlock Name="ItemDescription"/>
-            <TextBlock Name="ItemPrice"/>
+            <TextBlock Text="Описание"/>
+            <TextBox Name="ItemDescription"/>
+            <TextBlock Text="Цена"/>
+            <TextBox Name="ItemPrice"/>
         </StackPanel>
         <Button Grid.Row="1" Grid.Column="0" Name="DeleteButton" Content="Удалить" Click="DeleteButtonClick"/>
         <Button Grid.Row="1" Grid.Column="1" Name="SaveButton" Content="Сохранить" Click="SaveButtonClick"/>

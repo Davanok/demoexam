@@ -60,6 +60,7 @@ public class EditableItem
 {
     public string Article { get; set; } = "";
     public string Name { get; set; } = "";
+    public string MeasurementUnit { get; set; } = "";
     public int Count { get; set; }
     public float MaxSale { get; set; }
     public float Sale { get; set; }
@@ -70,18 +71,20 @@ public class EditableItem
     public string Description { get; set; } = "";
     public float Price { get; set; }
 
-    bool Validate() => !(
-        string.IsNullOrEmpty(Article) ||
-        string.IsNullOrEmpty(Name) ||
-        Categories.Select(c => c.Id).Contains(CategoryId) ||
-        Count < 0 ||
-        MaxSale < 0 ||
-        Sale < 0 ||
-        Sale > MaxSale ||
-        Suppliers.Select(s => s.Id).Contains(SupplierId) ||
-        Manufacturers.Select(m => m.Id).Contains(ManufacturerId) ||
-        Price < 0
-    );
+    public string? Validate()
+    {
+        if (string.IsNullOrEmpty(Article)) return "Артикул не может быть пустым";
+        if (string.IsNullOrEmpty(Name)) return "Название не может быть пустым";
+        if (!Categories.Select(c => c.Id).Contains(CategoryId)) return $"Категории с Id {CategoryId} не существует";
+        if (!Suppliers.Select(c => c.Id).Contains(SupplierId)) return $"Поставщика с Id {SupplierId} не существует";
+        if (!Manufacturers.Select(c => c.Id).Contains(ManufacturerId)) return $"Производителя с Id {ManufacturerId} не существует";
+        if (Count < 0) return "Количество не может быть отрицательным";
+        if (Price < 0) return "Цена не может быть отрицательной";
+        if (Sale < 0) return "Скидка не может быть отрицательной";
+        if (MaxSale < 0) return "Максимальная скидка не может быть отрицательной";
+        if (Sale > MaxSale) return "Скидка не может быть больше максимальной скидки";
+        return null;
+    }
 
     public required List<Category> Categories { get; init; }
     public required List<Supplier> Suppliers { get; init; }
