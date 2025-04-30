@@ -64,13 +64,13 @@ public partial class EditItemWindow : Window
         _item.Article = ItemArticle.Text;
         _item.Name = ItemName.Text;
         _item.MeasurementUnit = ItemMeasurementUnit.Text;
-        
-        if (int.TryParse(ItemCount.Text, out var count)) _item.Count = count;
-        else return "Количество";
-        if (float.TryParse(ItemMaxSale.Text, out var maxSale)) _item.MaxSale = maxSale;
-        else return "Максимальная скидка";
-        if (float.TryParse(ItemSale.Text, out var sale)) _item.Sale = sale;
-        else return "Скидка";
+
+        if (!int.TryParse(ItemCount.Text, out var count)) return "Количество";
+        _item.Count = count;
+        if (!float.TryParse(ItemMaxSale.Text, out var maxSale)) return "Максимальная скидка";
+        _item.MaxSale = maxSale;
+        if (!float.TryParse(ItemSale.Text, out var sale)) return "Скидка";
+        _item.Sale = sale;
 
         if (ItemCategory.SelectedItem == null) return "Категория";
         _item.CategoryId = (ItemCategory.SelectedItem as Category)!.Id;

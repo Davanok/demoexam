@@ -23,6 +23,7 @@ public class Database
                                         SELECT 
                                             u.user_id   AS user_id, 
                                             u.username  AS username,
+                                            u.password  AS password,
                                             u.role_id   AS role_id,
                                             r.role_name AS role_name
                                         FROM users AS u
@@ -89,6 +90,7 @@ public class Database
                 {
                     UserId = reader.GetInt32("user_id"),
                     UserName = reader.GetString("username"),
+                    PasswordHash = reader.GetString("password"),
                     Role = new Role
                     {
                         RoleId = reader.GetInt32("role_id"),

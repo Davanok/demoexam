@@ -101,5 +101,6 @@ public class User
 {
     public required int UserId { get; init; }
     public required string UserName { get; init; }
+    public required string PasswordHash { get; init; }
     public required Role Role;
 }

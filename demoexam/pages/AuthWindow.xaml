@@ -16,8 +16,10 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.ColumnSpan="3" Name="UserNameField"/>
+        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Name="UserNameField"/>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="PasswordField"/>
         <Button Grid.Row="2" Grid.Column="0" Content="Отмена" Click="OnCancelButtonClick"/>
         <Button Grid.Row="2" Grid.Column="2" Content="Продолжить" Click="OnContinueButtonClick"/>
     </Grid>
